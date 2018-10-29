@@ -3,6 +3,7 @@ package br.com.dcb.shipping.controller;
 import br.com.dcb.shipping.domain.request.ShippingRequest;
 import br.com.dcb.shipping.service.ShippingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,8 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/shippings")
 public class shippingController {
+    @Value("${port}")
+    String name = "World";
 
     @Autowired
     private ShippingService shippingService;
@@ -40,6 +43,11 @@ public class shippingController {
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
         return new ResponseEntity<>(shippingService.findById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/config")
+    public ResponseEntity<?> config() {
+        return new ResponseEntity<>(name, HttpStatus.OK);
     }
 
 
